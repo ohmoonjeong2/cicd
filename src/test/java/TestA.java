@@ -6,6 +6,6 @@ public class TestA {
     void test1(){
         System.out.println("단위테스트");
         int expect = 1;
-        Assertions.assertTrue(expect == 1);
+        Assertions.assertTrue(expect != 1);
     }
 }

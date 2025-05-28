@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -31,12 +31,6 @@ jobs:
 
       - name: Run Tests
         run: ./gradlew test
-  deploy:
-    needs: build
-    runs-on: self-hosted  # GitHub Actions는 원격에서 Docker Desktop에 접근할 수 없으므로, 반드시 로컬에 self-hosted runner를 설치해야 함
-    steps:
-      - name: Check out repository   # 이거 꼭 추가하세요!
-        uses: actions/checkout@v3
 
       - name: Build Docker image
         run: docker build -t test-app:latest .
@@ -47,7 +41,7 @@ jobs:
           docker rm test-app || true
 
       - name: Run Docker container
-        run: docker run -d --name test-java-app test-app:latest
+        run: docker run -d --name test-app test-app:latest
 #  deploy:
 #    needs: build
 #    runs-on: ubuntu-latest
